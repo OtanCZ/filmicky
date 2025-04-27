@@ -32,7 +32,7 @@ export const actions: Actions = {
 		const data = {
 			name,
 			surname,
-			date_of_birth: new Date(date_of_birth),
+			date_of_birth: date_of_birth ? new Date(date_of_birth) : null,
 			image_id: null
 		};
 
@@ -41,6 +41,9 @@ export const actions: Actions = {
 		if (!creatingNew) {
 			const currentPerson = await getPerson(personId);
 			currentImage = currentPerson?.images?.image_uri || '';
+
+			// @ts-expect-error funny javascript behavior is funny
+			data.image_id = currentImage.id;
 		}
 
 		if (file && typeof file !== 'string' && file.name !== '') {

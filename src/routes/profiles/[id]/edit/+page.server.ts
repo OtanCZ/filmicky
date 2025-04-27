@@ -33,6 +33,8 @@ export const actions: Actions = {
 		let currentImage = '';
 		const currentProfile = await getProfile(profileId);
 		currentImage = currentProfile?.images?.image_uri || '';
+		// @ts-expect-error funny javascript behavior is funny
+		data.pfp_image = currentImage.id;
 
 		if (file && typeof file !== 'string' && file.name !== '') {
 			const arrayBuffer = await file.arrayBuffer();

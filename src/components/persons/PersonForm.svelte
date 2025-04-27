@@ -2,7 +2,7 @@
 	let { person } = $props();
 	let name = person?.name ?? '';
 	let surname = person?.surname ?? '';
-	let date_of_birth = person?.dateOfBirth?.toISOString().split('T')[0] ?? '';
+	let date_of_birth = person?.date_of_birth?.toISOString().split('T')[0] ?? '';
 </script>
 
 <form class="" method="POST" enctype="multipart/form-data">

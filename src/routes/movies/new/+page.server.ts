@@ -31,15 +31,15 @@ export const actions: Actions = {
 		const movieStatusIdStr = form.get('movie_status_id')?.toString();
 		const publishersIdStr = form.get('publishers_id')?.toString();
 
-		if (!name || !releaseDateString || !lengthStr || !movieStatusIdStr || !publishersIdStr) {
+		if (!name || !movieStatusIdStr || !publishersIdStr) {
 			throw new Error('Missing required movie fields.');
 		}
 
 		const data = {
 			name,
 			description,
-			release_date: new Date(releaseDateString),
-			length: parseInt(lengthStr),
+			release_date: releaseDateString ? new Date(releaseDateString) : null,
+			length: parseInt(lengthStr ?? '0'),
 			movie_status_id: Number(movieStatusIdStr),
 			publishers_id: Number(publishersIdStr)
 		};

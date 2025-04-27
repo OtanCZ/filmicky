@@ -5,11 +5,10 @@ Svelte kit app for managing and rating movies, university semester project made 
 ```bash
 add mysql url to .env file
 npm i
-prisma db push
+npx prisma db push
 npm run dev
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
+# first registered user is set as admin, other ones are regular users
 ```
 
 ## Building

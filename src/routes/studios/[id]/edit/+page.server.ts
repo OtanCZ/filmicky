@@ -45,6 +45,8 @@ export const actions: Actions = {
 		if (!creatingNew) {
 			const currentStudio = await getStudio(studioId);
 			currentImage = currentStudio?.images?.image_uri || '';
+			// @ts-expect-error funny javascript behavior is funny
+			data.logo_image_id = currentImage.id;
 		}
 		
 		if (file && typeof file !== 'string' && file.name !== '') {
