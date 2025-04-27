@@ -6,10 +6,10 @@ function createTitle() {
 	return {
 		subscribe,
 		set: (value: string) => {
-			set(`${value} • Filmicky`)
+			set(`${value} • Filmíčky`)
 		},
 		clear: () => {
-			set('Filmicky • Home');
+			set('Filmíčky • Home');
 		}
 	}
 }

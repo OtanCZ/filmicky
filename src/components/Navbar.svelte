@@ -4,7 +4,7 @@
 
 <div class="navbar shadow-sm bg-my-secondary">
 	<div class="navbar-start">
-		<a class="btn btn-ghost xl:text-xl btn-sm xl:btn-md" href="/">Filmečky</a>
+		<a class="btn btn-ghost xl:text-xl btn-sm xl:btn-md" href="/">Filmíčky</a>
 	</div>
 
 	<div class="hidden sm:block navbar-center">
