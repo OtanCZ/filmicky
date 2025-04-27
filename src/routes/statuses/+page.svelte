@@ -2,6 +2,7 @@
 	import { enhance } from '$app/forms';
 	import { toasts } from '$lib/stores/toast.js';
 	import StatusCard from '../../components/status/StatusCard.svelte';
+	import { title } from '$lib/stores/title.js';
 
 	let { data, form } = $props();
 
@@ -14,6 +15,8 @@
 	$effect(() => {
 		filteredStatuses = data.statuses.filter(status => (status.status?.toLowerCase()).includes(searchTerm.toLowerCase()));
 	});
+
+	title.set('Statusy');
 
 	let searchTerm = $state('');
 	let filteredStatuses = $state(data.statuses);

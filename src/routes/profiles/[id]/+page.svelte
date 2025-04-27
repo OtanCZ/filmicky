@@ -1,5 +1,9 @@
 <script lang="ts">
+	import { title } from '$lib/stores/title';
+
 	let { data } = $props();
+
+	title.set('Profil uživatele ' + (data.profile ? data.profile.username : ''));
 </script>
 
 {#if data.profile}

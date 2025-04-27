@@ -2,10 +2,17 @@
 	import '../app.css';
 	import Navbar from '../components/Navbar.svelte';
 	import { toasts } from '$lib/stores/toast';
+	import { title } from '$lib/stores/title';
 
 
 	let { children, data } = $props();
 </script>
+
+<svelte:head>
+	<title>{$title}</title>
+	<meta name="description" content="TNPW2 & DBS2 zápočtový projekt | Otto Schön" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</svelte:head>
 
 <div class="flex flex-col min-h-screen bg-my-background">
 	<Navbar user={data.user} />

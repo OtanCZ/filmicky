@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import { toasts } from '$lib/stores/toast';
+	import { title } from '$lib/stores/title';
 
 	let { form } = $props();
 
@@ -9,6 +10,8 @@
 			toasts.add(form.message, form.success ? 'success' : 'error');
 		}
 	});
+
+	title.set('Přihlášení');
 </script>
 
 <form class="h-screen flex items-center justify-center" method="post" action="?/login" use:enhance>

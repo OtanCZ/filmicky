@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { toasts } from '$lib/stores/toast';
+	import { title } from '$lib/stores/title';
 
 	let { data, form } = $props();
 
@@ -12,6 +13,8 @@
 			window.location.href = '/persons';
 		}
 	});
+
+	title.set('Osobnost ' + (data.person ? '' + data.person.name : ''));
 </script>
 
 {#if data.person}

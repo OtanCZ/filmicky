@@ -2,6 +2,7 @@
 	import { enhance } from '$app/forms';
 	import { toasts } from '$lib/stores/toast.js';
 	import GenreCard from '../../components/genre/GenreCard.svelte';
+	import { title } from '$lib/stores/title.js';
 
 	let { data, form } = $props();
 
@@ -17,6 +18,8 @@
 
 	let searchTerm = $state('');
 	let filteredGenres = $state(data.genres);
+
+	title.set('Žánry');
 </script>
 
 <div class="flex flex-col min-h-screen items-center">

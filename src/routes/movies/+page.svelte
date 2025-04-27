@@ -2,6 +2,7 @@
 
 	import NewMoviePreview from '../../components/movie/NewMoviePreview.svelte';
 	import MoviePreview from '../../components/movie/MoviePreview.svelte';
+	import { title } from '$lib/stores/title';
 
 	let { data } = $props();
 
@@ -26,6 +27,8 @@
 			return (matchesName || matchesDescription) && matchesPublisher && matchesStatus && matchesMinYear && matchesMaxYear;
 		});
 	});
+
+	title.set('Filmy');
 </script>
 
 <div class="flex flex-col min-h-screen items-center">

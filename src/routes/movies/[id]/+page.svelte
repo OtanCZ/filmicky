@@ -3,6 +3,7 @@
 	import Comment from '../../../components/movie/Comment.svelte';
 	import { toasts } from '$lib/stores/toast';
 	import type { persons } from '@prisma/client';
+	import { title } from '$lib/stores/title';
 
 	let { data, form } = $props();
 
@@ -51,7 +52,7 @@
 		}
 	}
 
-
+	title.set('Film ' + (data.movie ? '' + data.movie.name : ''));
 </script>
 
 {#if data.movie}

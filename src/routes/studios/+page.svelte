@@ -1,11 +1,14 @@
 <script>
 	import NewStudioPreview from '../../components/studio/NewStudioPreview.svelte';
 	import StudioPreview from '../../components/studio/StudioPreview.svelte';
+	import { title } from '$lib/stores/title.js';
 
 	let { data } = $props();
 
 	let searchTerm = $state('');
 	let filteredStudios = $state(data.studios);
+
+	title.set('Vydavatelství');
 
 	$effect(() => {
 		filteredStudios = data.studios.filter(studio => studio.name?.toLowerCase().includes(searchTerm.toLowerCase()));

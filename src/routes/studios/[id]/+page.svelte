@@ -1,7 +1,10 @@
 <script lang="ts">
 	import { toasts } from '$lib/stores/toast';
+	import { title } from '$lib/stores/title';
 
 	let { data, form } = $props();
+
+	title.set(data.studio?.name ?? 'Vydavatelství');
 
 	$effect(() => {
 		if (form?.message) {

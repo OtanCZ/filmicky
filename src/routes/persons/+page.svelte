@@ -1,6 +1,7 @@
 <script>
 	import NewPersonPreview from '../../components/persons/NewPersonPreview.svelte';
 	import PersonPreview from '../../components/persons/PersonPreview.svelte';
+	import { title } from '$lib/stores/title.js';
 
 	let { data } = $props();
 
@@ -10,6 +11,8 @@
 	$effect(() => {
 		filteredPersons = data.persons.filter(person => (person.name?.toLowerCase() + " " + person.surname?.toLowerCase()).includes(searchTerm.toLowerCase()));
 	});
+
+	title.set('Osobnosti');
 </script>
 
 <div class="flex flex-col min-h-screen items-center">

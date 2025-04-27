@@ -2,6 +2,7 @@
 	import { enhance } from '$app/forms';
 	import { toasts } from '$lib/stores/toast.js';
 	import RoleCard from '../../components/role/RoleCard.svelte';
+	import { title } from '$lib/stores/title.js';
 
 	let { data, form } = $props();
 
@@ -14,6 +15,8 @@
 	$effect(() => {
 		filteredRoles = data.roles.filter(role => (role.role?.toLowerCase()).includes(searchTerm.toLowerCase()));
 	});
+
+	title.set('Role');
 
 	let searchTerm = $state('');
 	let filteredRoles = $state(data.roles);
