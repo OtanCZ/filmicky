@@ -1,0 +1,215 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model comments {
+  id             Int        @id @default(autoincrement())
+  comment        String?    @db.VarChar(255)
+  created_at     DateTime?  @db.Timestamp(0)
+  movie_id       Int?
+  user_id        Int?
+  episode_id     Int?
+  comment_id     Int?
+  movies         movies?    @relation(fields: [movie_id], references: [id], onUpdate: Restrict, map: "comments_ibfk_1")
+  users          users?     @relation(fields: [user_id], references: [id], onUpdate: Restrict, map: "comments_ibfk_2")
+  episodes       episodes?  @relation(fields: [episode_id], references: [id], onUpdate: Restrict, map: "comments_ibfk_3")
+  comments       comments?  @relation("commentsTocomments", fields: [comment_id], references: [id], onUpdate: Restrict, map: "comments_ibfk_12")
+  other_comments comments[] @relation("commentsTocomments")
+  ratings        ratings?
+
+  @@index([episode_id], map: "episode_id")
+  @@index([movie_id], map: "movie_id")
+  @@index([user_id], map: "user_id")
+  @@index([comment_id], map: "comment_id")
+}
+
+model countries {
+  name       String       @id @db.VarChar(32)
+  publishers publishers[]
+}
+
+model genres {
+  id            Int             @id @default(autoincrement())
+  genre         String?         @db.VarChar(32)
+  movies_genres movies_genres[]
+}
+
+model images {
+  id           Int            @id @default(autoincrement())
+  image_uri    String?        @db.VarChar(255)
+  movie_images movie_images[]
+  persons      persons[]
+  publishers   publishers[]
+  users        users[]
+}
+
+model list_types {
+  id    Int     @id @default(autoincrement())
+  type  String? @db.VarChar(32)
+  lists lists[]
+}
+
+model lists {
+  id           Int         @id @default(autoincrement())
+  name         String?     @db.VarChar(32)
+  description  String?     @db.VarChar(255)
+  user_id      Int?
+  list_type_id Int?
+  users        users?      @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "lists_ibfk_1")
+  list_types   list_types? @relation(fields: [list_type_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "lists_ibfk_2")
+
+  @@index([list_type_id], map: "list_type_id")
+  @@index([user_id], map: "user_id")
+}
+
+model movie_images {
+  movie_id Int
+  image_id Int
+  movies   movies @relation(fields: [movie_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "movie_images_ibfk_1")
+  images   images @relation(fields: [image_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "movie_images_ibfk_2")
+
+  @@id([movie_id, image_id])
+  @@index([image_id], map: "image_id")
+}
+
+model movie_person_role {
+  persons_id  Int
+  roles_id    Int
+  movies_id   Int
+  episode_id  Int?
+  description String?   @db.VarChar(32)
+  movies      movies    @relation(fields: [movies_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "movie_person_role_ibfk_1")
+  persons     persons   @relation(fields: [persons_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "movie_person_role_ibfk_2")
+  roles       roles     @relation(fields: [roles_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "movie_person_role_ibfk_3")
+  episodes    episodes? @relation(fields: [episode_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "movie_person_role_ibfk_4")
+
+  @@id([movies_id, persons_id, roles_id])
+  @@index([persons_id], map: "persons_id")
+  @@index([roles_id], map: "roles_id")
+  @@index([episode_id], map: "episode_id")
+}
+
+model movie_status {
+  id     Int      @id @default(autoincrement())
+  status String?  @db.VarChar(32)
+  movies movies[]
+}
+
+model movies {
+  id                Int                 @id @default(autoincrement())
+  name              String              @db.VarChar(32)
+  description       String?             @db.VarChar(255)
+  length            Int?
+  release_date      DateTime?           @db.Timestamp(0)
+  publishers_id     Int?
+  movie_status_id   Int?
+  comments          comments[]
+  episodes          episodes[]
+  movie_images      movie_images[]
+  movie_person_role movie_person_role[]
+  publishers        publishers?         @relation(fields: [publishers_id], references: [id], onUpdate: Restrict, map: "movies_ibfk_1")
+  movie_status      movie_status?       @relation(fields: [movie_status_id], references: [id], onUpdate: Restrict, map: "movies_ibfk_2")
+  movies_genres     movies_genres[]
+
+  @@index([movie_status_id], map: "movie_status_id")
+  @@index([publishers_id], map: "publishers_id")
+}
+
+model persons {
+  id                Int                 @id @default(autoincrement())
+  name              String              @db.VarChar(32)
+  surname           String              @db.VarChar(32)
+  image_id          Int?
+  date_of_birth     DateTime?           @db.Timestamp(0)
+  movie_person_role movie_person_role[]
+  images            images?             @relation(fields: [image_id], references: [id], onUpdate: Restrict, map: "persons_ibfk_1")
+
+  @@index([image_id], map: "image_id")
+}
+
+model publishers {
+  id            Int        @id @default(autoincrement())
+  name          String     @db.VarChar(32)
+  logo_image_id Int?
+  country       String?    @db.VarChar(32)
+  movies        movies[]
+  images        images?    @relation(fields: [logo_image_id], references: [id], onUpdate: Restrict, map: "publishers_ibfk_1")
+  countries     countries? @relation(fields: [country], references: [name], onDelete: Restrict, onUpdate: Restrict, map: "publishers_ibfk_2")
+
+  @@index([country], map: "country")
+  @@index([logo_image_id], map: "logo_image_id")
+}
+
+model ratings {
+  comment_id Int      @id
+  rating     Int
+  comments   comments @relation(fields: [comment_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "ratings_ibfk_1")
+}
+
+model roles {
+  id                Int                 @id @default(autoincrement())
+  role              String              @db.VarChar(32)
+  movie_person_role movie_person_role[]
+}
+
+model user_permissions {
+  id    Int     @id @default(autoincrement())
+  role  String? @db.VarChar(32)
+  users users[]
+}
+
+model episodes {
+  id                Int                 @id @default(autoincrement())
+  name              String?             @db.VarChar(32)
+  season            Int?
+  episode_number    Int?
+  length            DateTime?           @db.Timestamp(0)
+  movie_id          Int?
+  comments          comments[]
+  movies            movies?             @relation(fields: [movie_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "episodes_ibfk_1")
+  movie_person_role movie_person_role[]
+
+  @@index([movie_id], map: "movie_id")
+}
+
+model users {
+  id                  Int               @id @default(autoincrement())
+  user_permissions_id Int?
+  pfp_image           Int?
+  username            String            @db.VarChar(32)
+  password_hash       String?           @db.VarChar(255)
+  description         String?           @db.VarChar(255)
+  comments            comments[]
+  lists               lists[]
+  sessions            sessions[]
+  images              images?           @relation(fields: [pfp_image], references: [id], onUpdate: Restrict, map: "users_ibfk_1")
+  user_permissions    user_permissions? @relation(fields: [user_permissions_id], references: [id], onUpdate: Restrict, map: "users_ibfk_2")
+
+  @@index([pfp_image], map: "pfp_image")
+  @@index([user_permissions_id], map: "user_permissions_id")
+}
+
+model sessions {
+  id         String   @id @db.VarChar(255)
+  user_id    Int
+  expires_at DateTime @db.Timestamp(0)
+  users      users    @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "sessions_ibfk_1")
+
+  @@index([user_id], map: "user_id")
+}
+
+model movies_genres {
+  id       Int    @id @default(autoincrement())
+  movie_id Int
+  genre_id Int
+  movies   movies @relation(fields: [movie_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "movies_genres_ibfk_1")
+  genres   genres @relation(fields: [genre_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "movies_genres_ibfk_2")
+
+  @@index([genre_id], map: "genre_id")
+  @@index([movie_id], map: "movie_id")
+}

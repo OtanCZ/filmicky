@@ -1,3 +1,15 @@
 @import 'tailwindcss';
 @plugin '@tailwindcss/forms';
 @plugin '@tailwindcss/typography';
+@plugin "daisyui";
+
+@theme {
+    --color-my-background: #0B1E3D;
+    --color-my-primary: #C9184A;
+    --color-my-secondary: #4B587C;
+    --color-my-accent: #F4B942;
+    --color-my-text: #F7F7F9;
+    --color-my-text-subtle: #9CA3AF;
+    --color-my-fresh: #4ADE80;
+    --color-my-rotten: #FF6B57;
+}
