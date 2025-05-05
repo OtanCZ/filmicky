@@ -165,10 +165,19 @@ export async function getProfile(id: number) {
 					comments: {
 						include: {
 							movies: true,
+							users: {
+								include: {
+									images: true,
+								}
+							}
 						}
 					},
 					movies: true,
-					users: true
+					users: {
+						include: {
+							images: true,
+						}
+					}
 				}
 			}
 		}
