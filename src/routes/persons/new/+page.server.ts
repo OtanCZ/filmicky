@@ -18,7 +18,7 @@ export const actions: Actions = {
 
 		const name = form.get('name') as string;
 		const surname = form.get('surname') as string;
-		const date_of_birth = form.get('date_of_birth') as string;
+		const date_of_birth = form.get('date_of_birth') as string || '';
 		const file = form.get('image');
 
 		let personId = Number(params.id);
@@ -27,7 +27,7 @@ export const actions: Actions = {
 		const data = {
 			name,
 			surname,
-			date_of_birth: new Date(date_of_birth),
+			date_of_birth: date_of_birth ? new Date(date_of_birth) : null,
 			image_id: null
 		};
 

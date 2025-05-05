@@ -159,6 +159,18 @@ export async function getProfile(id: number) {
 		include: {
 			images: true,
 			user_permissions: true,
+			comments: {
+				include: {
+					ratings: true,
+					comments: {
+						include: {
+							movies: true,
+						}
+					},
+					movies: true,
+					users: true
+				}
+			}
 		}
 	});
 

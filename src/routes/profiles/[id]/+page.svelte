@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { title } from '$lib/stores/title';
+	import Comment from '../../../components/movie/Comment.svelte';
 
 	let { data } = $props();
 
@@ -69,6 +70,14 @@
 									</form>
 								{/if}
 							{/if}
+						{/if}
+					</div>
+					<div>
+						{#if data.profile.comments.length > 0}
+							<h3 class="text-2xl font-bold">Komentáře</h3>
+							{#each data.profile.comments as comment (comment.id)}
+								<Comment user={data.user} comment={comment} onProfile={true} />
+							{/each}
 						{/if}
 					</div>
 				</div>

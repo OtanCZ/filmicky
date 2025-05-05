@@ -14,7 +14,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </svelte:head>
 
-<div class="flex flex-col min-h-screen bg-my-background">
+<div class="flex flex-col min-h-screen bg-my-background font-sans">
 	<Navbar user={data.user} />
 	<div class="toast toast-bottom toast-center z-50">
 		{#each $toasts as toast (toast.id)}

@@ -155,7 +155,7 @@
 				<div class="mt-6">
 					<h3 class="text-2xl font-bold">Komentáře</h3>
 					{#each data.movie.comments as comment (comment.id)}
-						<Comment user={data.user} comment={comment} />
+						<Comment user={data.user} comment={comment} onProfile={false} />
 					{/each}
 				</div>
 			{:else}

@@ -21,7 +21,9 @@
 		description: pr.description
 	})) ?? [];
 
-	let genresId: number[] = $state(movie?.movies_genres?.map(mg => mg.genres_id) ?? []);
+	let genresId: number[] = $state(movie?.movies_genres?.map(mg => mg.genre_id) ?? []);
+	console.log(movie);
+	console.log(genresId)
 </script>
 
 <form class="" method="POST" enctype="multipart/form-data">

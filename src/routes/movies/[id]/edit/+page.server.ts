@@ -27,12 +27,13 @@ export const actions: Actions = {
 			return fail(403, { message: 'Nemáte oprávnění upravit film.' });
 		}
 
-		let timeSplit = (form.get('length') as string).split(':') || [0, 0];
+		const timeSplit = (form.get('length') as string).split(':') || [0, 0];
+		const releaseDateString = form.get('release_date')?.toString();
 
 		const data = {
 			name: form.get('name') as string,
 			description: form.get('description') as string,
-			release_date: new Date(form.get('release_date') as string),
+			release_date: releaseDateString ? new Date(releaseDateString) : null,
 			length: parseInt(timeSplit[0]) * 60 + parseInt(timeSplit[1]),
 			movie_status_id: Number(form.get('movie_status_id')),
 			publishers_id: Number(form.get('publishers_id'))

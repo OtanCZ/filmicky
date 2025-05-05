@@ -44,7 +44,7 @@ export const actions: Actions = {
 			publishers_id: Number(publishersIdStr)
 		};
 
-		if (isNaN(data.length) || isNaN(data.movie_status_id) || isNaN(data.publishers_id)) {
+		if (isNaN(data.movie_status_id) || isNaN(data.publishers_id)) {
 			throw new Error('Invalid numeric values.');
 		}
 
