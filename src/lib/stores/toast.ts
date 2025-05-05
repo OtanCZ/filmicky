@@ -19,7 +19,7 @@ export const toasts = {
 		update((all) => [...all, { id, message, type }]);
 		setTimeout(() => {
 			toasts.remove(id);
-		}, 3000); // auto-remove after 3 seconds
+		}, 3000);
 	},
 	remove(id: number) {
 		update((all) => all.filter((t) => t.id !== id));

@@ -13,16 +13,13 @@ model comments {
   created_at     DateTime?  @db.Timestamp(0)
   movie_id       Int?
   user_id        Int?
-  episode_id     Int?
   comment_id     Int?
   movies         movies?    @relation(fields: [movie_id], references: [id], onUpdate: Restrict, map: "comments_ibfk_1")
   users          users?     @relation(fields: [user_id], references: [id], onUpdate: Restrict, map: "comments_ibfk_2")
-  episodes       episodes?  @relation(fields: [episode_id], references: [id], onUpdate: Restrict, map: "comments_ibfk_3")
   comments       comments?  @relation("commentsTocomments", fields: [comment_id], references: [id], onUpdate: Restrict, map: "comments_ibfk_12")
   other_comments comments[] @relation("commentsTocomments")
   ratings        ratings?
 
-  @@index([episode_id], map: "episode_id")
   @@index([movie_id], map: "movie_id")
   @@index([user_id], map: "user_id")
   @@index([comment_id], map: "comment_id")
@@ -48,25 +45,6 @@ model images {
   users        users[]
 }
 
-model list_types {
-  id    Int     @id @default(autoincrement())
-  type  String? @db.VarChar(32)
-  lists lists[]
-}
-
-model lists {
-  id           Int         @id @default(autoincrement())
-  name         String?     @db.VarChar(32)
-  description  String?     @db.VarChar(255)
-  user_id      Int?
-  list_type_id Int?
-  users        users?      @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "lists_ibfk_1")
-  list_types   list_types? @relation(fields: [list_type_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "lists_ibfk_2")
-
-  @@index([list_type_id], map: "list_type_id")
-  @@index([user_id], map: "user_id")
-}
-
 model movie_images {
   movie_id Int
   image_id Int
@@ -81,17 +59,14 @@ model movie_person_role {
   persons_id  Int
   roles_id    Int
   movies_id   Int
-  episode_id  Int?
-  description String?   @db.VarChar(32)
-  movies      movies    @relation(fields: [movies_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "movie_person_role_ibfk_1")
-  persons     persons   @relation(fields: [persons_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "movie_person_role_ibfk_2")
-  roles       roles     @relation(fields: [roles_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "movie_person_role_ibfk_3")
-  episodes    episodes? @relation(fields: [episode_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "movie_person_role_ibfk_4")
+  description String? @db.VarChar(32)
+  movies      movies  @relation(fields: [movies_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "movie_person_role_ibfk_1")
+  persons     persons @relation(fields: [persons_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "movie_person_role_ibfk_2")
+  roles       roles   @relation(fields: [roles_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "movie_person_role_ibfk_3")
 
   @@id([movies_id, persons_id, roles_id])
   @@index([persons_id], map: "persons_id")
   @@index([roles_id], map: "roles_id")
-  @@index([episode_id], map: "episode_id")
 }
 
 model movie_status {
@@ -109,7 +84,6 @@ model movies {
   publishers_id     Int?
   movie_status_id   Int?
   comments          comments[]
-  episodes          episodes[]
   movie_images      movie_images[]
   movie_person_role movie_person_role[]
   publishers        publishers?         @relation(fields: [publishers_id], references: [id], onUpdate: Restrict, map: "movies_ibfk_1")
@@ -163,20 +137,6 @@ model user_permissions {
   users users[]
 }
 
-model episodes {
-  id                Int                 @id @default(autoincrement())
-  name              String?             @db.VarChar(32)
-  season            Int?
-  episode_number    Int?
-  length            DateTime?           @db.Timestamp(0)
-  movie_id          Int?
-  comments          comments[]
-  movies            movies?             @relation(fields: [movie_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "episodes_ibfk_1")
-  movie_person_role movie_person_role[]
-
-  @@index([movie_id], map: "movie_id")
-}
-
 model users {
   id                  Int               @id @default(autoincrement())
   user_permissions_id Int?
@@ -185,7 +145,6 @@ model users {
   password_hash       String?           @db.VarChar(255)
   description         String?           @db.VarChar(255)
   comments            comments[]
-  lists               lists[]
   sessions            sessions[]
   images              images?           @relation(fields: [pfp_image], references: [id], onUpdate: Restrict, map: "users_ibfk_1")
   user_permissions    user_permissions? @relation(fields: [user_permissions_id], references: [id], onUpdate: Restrict, map: "users_ibfk_2")

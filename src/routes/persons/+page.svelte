@@ -17,11 +17,11 @@
 
 <div class="flex flex-col min-h-screen items-center">
 	<div class="w-screen xl:w-[80%] flex flex-col">
-		<div class="flex flex-row justify-between items-center">
+		<div class="flex flex-row justify-between items-center mb-4">
 			<div class="text-2xl font-bold">Osobnosti</div>
 		</div>
 
-		<div class="flex flex-row items-center">
+		<div class="flex flex-row items-center mb-6">
 			<input type="text" placeholder="Hledat..." class="input" bind:value={searchTerm} />
 		</div>
 

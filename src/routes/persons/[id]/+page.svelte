@@ -4,6 +4,21 @@
 
 	let { data, form } = $props();
 
+	const grouped: Record<string, { movie: any, description: string | null }[]> = {};
+
+	if (data.person) {
+		for (const mpr of data.person.movie_person_role) {
+			const roleName = mpr.roles.role || 'Jiné';
+			if (!grouped[roleName]) {
+				grouped[roleName] = [];
+			}
+			grouped[roleName].push({
+				movie: mpr.movies,
+				description: mpr.description
+			});
+		}
+	}
+
 	$effect(() => {
 		if (form?.message) {
 			toasts.add(form.message, form.success ? 'success' : 'error');
@@ -38,22 +53,40 @@
 							</p>
 						{/if}
 					</div>
+
+					{#if Object.keys(grouped).length > 0}
+							{#each Object.entries(grouped) as [role, movies] (role)}
+								<div class="my-2">
+									<span class="font-semibold">{role}</span>
+										{#each movies as { movie, description } (movie.id)}
+											<p>
+												<a href={"/movies/" + movie.id} class="link link-primary">{movie.name}</a>
+												{#if description}
+													- {description}
+												{/if}
+											</p>
+										{/each}
+								</div>
+							{/each}
+					{/if}
+
 					<div class="card-actions justify-end">
-						<a href="/persons" class="btn btn-primary">Zpět na seznam osobností</a>
-						{#if data.user}
-							{#if data.user.user_permissions_id >= 2}
-								<a href={"/persons/" + data.person.id + "/edit"} class="btn btn-secondary">Upravit osobnost</a>
-								<form
-									method="POST"
-									action=""
-									class="ml-auto">
-									<input type="hidden" name="personId" value={data.person.id} />
-									<button type="submit" class="btn btn-error">
-										Smazat
-									</button>
-								</form>
+						<div class="flex flex-row justify-center items-center gap-4">
+							{#if data.user}
+								{#if data.user.user_permissions_id >= 2}
+									<a href={"/persons/" + data.person.id + "/edit"} class="btn btn-primary">Upravit osobnost</a>
+									<form
+										method="POST"
+										action=""
+										class="ml-auto">
+										<input type="hidden" name="personId" value={data.person.id} />
+										<button type="submit" class="btn btn-error">
+											Smazat
+										</button>
+									</form>
+								{/if}
 							{/if}
-						{/if}
+						</div>
 					</div>
 				</div>
 			</div>

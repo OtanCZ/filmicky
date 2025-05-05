@@ -6,8 +6,8 @@ Svelte kit app for managing and rating movies, university semester project made 
 add mysql url to .env file
 npm i
 npx prisma db push
+npx prisma generate
 npm run dev
-
 # first registered user is set as admin, other ones are regular users
 ```
 

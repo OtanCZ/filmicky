@@ -38,22 +38,31 @@
 							</p>
 						{/if}
 					</div>
-					<div class="card-actions justify-end">
-						<a href="/studios" class="btn btn-primary">Zpět na seznam vydavatelství</a>
-						{#if data.user}
-							{#if data.user.user_permissions_id >= 2}
-								<a href={"/studios/" + data.studio.id + "/edit"} class="btn btn-secondary">Upravit vydavatelství</a>
-								<form
-									method="POST"
-									action=""
-									class="ml-auto">
-									<input type="hidden" name="studioId" value={data.studio.id} />
-									<button type="submit" class="btn btn-error">
-										Smazat
-									</button>
-								</form>
-							{/if}
+					<div class="">
+						<span class="font-semibold">Filmy:</span>
+						{#if data.studio.movies}
+							{#each data.studio.movies as movie (movie.id)}
+								<p><a class="link link-primary" href={"/movies/" + movie.id}> {movie.name}</a></p>
+							{/each}
 						{/if}
+					</div>
+					<div class="card-actions justify-end">
+						<div class="flex flex-row justify-center items-center gap-4">
+							{#if data.user}
+								{#if data.user.user_permissions_id >= 2}
+									<a href={"/studios/" + data.studio.id + "/edit"} class="btn btn-primary">Upravit vydavatelství</a>
+									<form
+										method="POST"
+										action=""
+										class="ml-auto">
+										<input type="hidden" name="studioId" value={data.studio.id} />
+										<button type="submit" class="btn btn-error">
+											Smazat
+										</button>
+									</form>
+								{/if}
+							{/if}
+						</div>
 					</div>
 				</div>
 			</div>

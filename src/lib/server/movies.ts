@@ -8,20 +8,8 @@ export async function getAllMovies() {
 					images: true,
 				}
 			},
-			movie_person_role: {
-				include: {
-					persons: true,
-					roles: true,
-				}
-			},
-			movies_genres: {
-				include: {
-					genres: true,
-				}
-			},
 			movie_status: true,
 			publishers: true,
-			comments: true,
 		}
 	});
 
@@ -117,6 +105,7 @@ export async function getStudio(id: number) {
 		where: { id: id },
 		include: {
 			images: true,
+			movies: true
 		}
 	});
 
@@ -173,7 +162,6 @@ export async function getProfile(id: number) {
 		}
 	});
 
-	console.log(profile);
 	return profile;
 }
 

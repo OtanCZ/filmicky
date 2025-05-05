@@ -23,12 +23,11 @@ export const actions: Actions = {
 		console.log(content, parentComment);
 
 		if (!content || isNaN(parentComment)) {
-			return fail(400, { message: 'Neplatná data formuláře.' }); // ❌ invalid form
+			return fail(400, { message: 'Neplatná data formuláře.' });
 		}
 
 		try {
 			console.log('New comment reply:', { content, parentComment });
-
 			await prisma.comments.create({
 				data: {
 					comment: content,
@@ -38,10 +37,10 @@ export const actions: Actions = {
 				}
 			});
 
-			return { success: true, message: 'Komentář byl úspěšně uložen.' }; // ✅ success
+			return { success: true, message: 'Komentář byl úspěšně uložen.' };
 		} catch (error) {
 			console.error(error);
-			return fail(500, { message: 'Nepodařilo se uložit komentář.' }); // ❌ server error
+			return fail(500, { message: 'Nepodařilo se uložit komentář.' });
 		}
 	},
 
@@ -53,11 +52,21 @@ export const actions: Actions = {
 		const movieId = parseInt(formData.get('movieId') as string);
 
 		if (!content || isNaN(rating) || isNaN(movieId)) {
-			return fail(400, { message: 'Neplatná data formuláře.' }); // ❌ invalid form
+			return fail(400, { message: 'Neplatná data formuláře.' });
 		}
 
 		try {
 			console.log('New comment:', { content, rating, movieId });
+
+			const existingComment = await prisma.comments.findFirst({
+				where: {
+					movie_id: movieId,
+					user_id: locals.user?.id,
+				}
+			});
+			if (existingComment) {
+				return fail(400, { message: 'Už jste ohodnotili tento film.' });
+			}
 
 
 			const comment = await prisma.comments.create({
@@ -76,10 +85,10 @@ export const actions: Actions = {
 				}
 			});
 
-			return { success: true, message: 'Komentář byl úspěšně uložen.' }; // ✅ success
+			return { success: true, message: 'Komentář byl úspěšně uložen.' };
 		} catch (error) {
 			console.error(error);
-			return fail(500, { message: 'Nepodařilo se uložit komentář.' }); // ❌ server error
+			return fail(500, { message: 'Nepodařilo se uložit komentář.' });
 		}
 	},
 	deleteComment: async ({ request, locals }) => {
@@ -87,7 +96,11 @@ export const actions: Actions = {
 		const commentId = parseInt(formData.get('commentId') as string);
 
 		if (isNaN(commentId)) {
-			return fail(400, { message: 'Neplatná data formuláře.' }); // ❌ invalid form
+			return fail(400, { message: 'Neplatná data formuláře.' });
+		}
+
+		if(!locals.user || !(locals.user.user_permissions_id! >= 2)) {
+			return fail(403, { message: 'Nemáte oprávnění smazat komentář.' });
 		}
 
 		try {
@@ -99,10 +112,10 @@ export const actions: Actions = {
 				}
 			});
 
-			return { success: true, message: 'Komentář byl úspěšně smazán.' }; // ✅ success
+			return { success: true, message: 'Komentář byl úspěšně smazán.' };
 		} catch (error) {
 			console.error(error);
-			return fail(500, { message: 'Nepodařilo se smazat komentář.' }); // ❌ server error
+			return fail(500, { message: 'Nepodařilo se smazat komentář.' });
 		}
 	},
 	deleteMovie: async ({ request, locals }) => {
@@ -110,7 +123,7 @@ export const actions: Actions = {
 		const movieId = parseInt(formData.get('movieId') as string);
 
 		if (isNaN(movieId)) {
-			return fail(400, { message: 'Neplatná data formuláře.' }); // ❌ invalid form
+			return fail(400, { message: 'Neplatná data formuláře.' });
 		}
 
 		if(!locals.user || !(locals.user.user_permissions_id! >= 2)) {
@@ -126,10 +139,10 @@ export const actions: Actions = {
 				}
 			});
 
-			return { success: true, message: 'Film byl úspěšně smazán.' }; // ✅ success
+			return { success: true, message: 'Film byl úspěšně smazán.' };
 		} catch (error) {
 			console.error(error);
-			return fail(500, { message: 'Nepodařilo se smazat film.' }); // ❌ server error
+			return fail(500, { message: 'Nepodařilo se smazat film.' });
 		}
 	}
 };

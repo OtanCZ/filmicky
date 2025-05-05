@@ -33,7 +33,7 @@
 					<div class="card-actions justify-end">
 						{#if data.user}
 							{#if data.user.id === data.profile.id}
-								<a href={"/profiles/" + data.profile.id + "/edit"} class="btn btn-secondary">Upravit profil</a>
+								<a href={"/profiles/" + data.profile.id + "/edit"} class="btn btn-primary">Upravit profil</a>
 							{/if}
 
 							{#if data.user.user_permissions_id === 3}

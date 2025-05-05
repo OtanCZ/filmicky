@@ -41,17 +41,17 @@
 
 			<input type="text" placeholder="Hledat název nebo popis..." class="input input-bordered w-64" bind:value={searchTerm} />
 
-			<select class="select select-bordered" bind:value={selectedStatus}>
-				<option value="">Status</option>
-				{#each [...new Set(data.movies.map(m => m.movie_status?.status).filter(Boolean))] as status (status)}
-					<option value={status}>{status}</option>
-				{/each}
-			</select>
-
 			<select class="select select-bordered" bind:value={selectedPublisher}>
 				<option value="">Vydavatel</option>
 				{#each [...new Set(data.movies.map(m => m.publishers?.name).filter(Boolean))] as publisher (publisher)}
 					<option value={publisher}>{publisher}</option>
+				{/each}
+			</select>
+
+			<select class="select select-bordered" bind:value={selectedStatus}>
+				<option value="">Status</option>
+				{#each [...new Set(data.movies.map(m => m.movie_status?.status).filter(Boolean))] as status (status)}
+					<option value={status}>{status}</option>
 				{/each}
 			</select>
 

@@ -58,9 +58,6 @@
 {#if data.movie}
 	<div class="min-h-screen flex flex-col items-center p-6">
 		<div class="w-full max-w-5xl">
-			<div class="flex justify-end mb-4">
-			</div>
-
 			<div class="card lg:card-side bg-black/20 shadow-xl">
 				<figure class="w-full lg:w-1/2">
 					<img src={data.movie.movie_images[0]?.images.image_uri} alt={data.movie.name}
@@ -70,7 +67,6 @@
 				<div class="card-body w-full lg:w-1/2">
 					<div class="flex flex-row justify-between">
 						<h2 class="card-title text-3xl">{data.movie.name}</h2>
-
 						<div class="rating rating-half">
 							{#each stars as { starValue, maskClass } (starValue)}
 								<div
@@ -94,9 +90,9 @@
 
 						<p><span class="font-semibold">Žánry:</span>
 							{#each data.movie.movies_genres as genre (genre.id)}
-								<a class="link link-secondary mr-1" href={"/genres/" + genre.genres.id}>
-									{genre.genres.genre}
-								</a>
+								<span>
+									{genre.genres.genre + " "}
+								</span>
 							{/each}
 						</p>
 
@@ -120,7 +116,7 @@
 								<span class="font-semibold">{role}</span>
 								{#each people as { person, description } (person)}
 									<p>
-										<a href={"/persons/" + person.id} class="link link-secondary">
+										<a href={"/persons/" + person.id} class="link link-primary">
 											{person.name} {person.surname}
 										</a>
 										{#if description}
@@ -132,21 +128,22 @@
 						{/each}
 					</div>
 					<div class="card-actions justify-end">
-						<a href="/movies" class="btn btn-primary">Zpět na seznam filmů</a>
-						{#if data.user}
-							{#if data.user.user_permissions_id >= 2}
-								<a href={"/movies/" + data.movie.id + "/edit"} class="btn btn-secondary">Upravit film</a>
-								<form
-									method="POST"
-									action="?/deleteMovie"
-									class="ml-auto">
-									<input type="hidden" name="movieId" value={data.movie.id} />
-									<button type="submit" class="btn btn-error">
-										Smazat
-									</button>
-								</form>
+						<div class="flex flex-row justify-center items-center gap-4">
+							{#if data.user}
+								{#if data.user.user_permissions_id >= 2}
+									<a href={"/movies/" + data.movie.id + "/edit"} class="btn btn-primary">Upravit film</a>
+									<form
+										method="POST"
+										action="?/deleteMovie"
+										class="ml-auto">
+										<input type="hidden" name="movieId" value={data.movie.id} />
+										<button type="submit" class="btn btn-error">
+											Smazat
+										</button>
+									</form>
+								{/if}
 							{/if}
-						{/if}
+						</div>
 					</div>
 				</div>
 			</div>

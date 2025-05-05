@@ -24,8 +24,14 @@
 
 <div class="flex flex-col min-h-screen items-center">
 	<div class="w-screen xl:w-[80%] flex flex-col">
-		<div class="flex flex-row justify-between items-center">
+		<div class="flex flex-row justify-between items-center mb-4">
 			<div class="text-2xl font-bold">Statusy</div>
+
+		</div>
+
+		<div class="flex flex-row items-center gap-4 mb-6">
+			<input type="text" placeholder="Hledat..." class="input" bind:value={searchTerm} />
+
 			{#if data.user}
 				{#if data.user.user_permissions_id >= 2}
 					<form use:enhance action="?/newStatus" method="POST">
@@ -35,10 +41,6 @@
 					</form>
 				{/if}
 			{/if}
-		</div>
-
-		<div class="flex flex-row items-center">
-			<input type="text" placeholder="Hledat..." class="input" bind:value={searchTerm} />
 		</div>
 
 		<div class="grid grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 2xl:grid-cols-8 gap-4 w-full">
