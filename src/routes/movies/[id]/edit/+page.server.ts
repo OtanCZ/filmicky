@@ -21,7 +21,6 @@ export const actions: Actions = {
 	default: async ({ request, params, locals }) => {
 		let movieId = Number(params.id);
 		const form = await request.formData();
-		console.log(form);
 
 		if(!locals.user || !(locals.user.user_permissions_id! >= 2)) {
 			return fail(403, { message: 'Nemáte oprávnění upravit film.' });

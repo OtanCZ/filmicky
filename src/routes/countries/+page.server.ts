@@ -47,7 +47,6 @@ export const actions: Actions = {
 	},
 	delete: async ({ request, locals }) => {
 		const formData = await request.formData();
-		console.log(formData);
 		const countryId = formData.get('countryId') as string;
 
 		if (countryId === null) {

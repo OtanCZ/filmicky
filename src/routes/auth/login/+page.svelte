@@ -35,8 +35,8 @@
 				</p>
 			</fieldset>
 			<div class="card-actions justify-center">
-				<button class="btn">Přihlásit</button>
-				<button class="btn" formaction="?/register">Registrovat</button>
+				<button class="btn btn-primary">Přihlásit</button>
+				<button class="btn btn-primary" formaction="?/register">Registrovat</button>
 			</div>
 		</div>
 	</div>

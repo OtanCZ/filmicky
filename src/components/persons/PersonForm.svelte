@@ -37,7 +37,7 @@
 					<input type="file" name="image" class="file-input" accept="image/*"/>
 				</fieldset>
 
-				<button type="submit" class="btn">{person ? 'Aktualizovat' : 'Vytvořit'} osobnost</button>
+				<button type="submit" class="btn btn-primary">{person ? 'Aktualizovat' : 'Vytvořit'} osobnost</button>
 			</div>
 		</div>
 	</div>

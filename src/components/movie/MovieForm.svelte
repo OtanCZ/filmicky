@@ -97,7 +97,7 @@
 						</div>
 					{/each}
 
-					<button type="button" class="btn btn-sm btn-success mt-2" onclick={() => personRoles.push({ personId: loadedPersons[0]?.id ?? 0, roleId: loadedRoles[0]?.id ?? 0, description: '' })}>
+					<button type="button" class="btn btn-sm btn-primary mt-2" onclick={() => personRoles.push({ personId: loadedPersons[0]?.id ?? 0, roleId: loadedRoles[0]?.id ?? 0, description: '' })}>
 						Přidat osobu
 					</button>
 				</fieldset>
@@ -119,7 +119,7 @@
 						</div>
 					{/each}
 
-					<button type="button" class="btn btn-sm btn-success mt-2" onclick={() => genresId.push(loadedGenres[0]?.id ?? 0)}>
+					<button type="button" class="btn btn-sm btn-primary mt-2" onclick={() => genresId.push(loadedGenres[0]?.id ?? 0)}>
 						Přidat žánr
 					</button>
 				</fieldset>
@@ -130,7 +130,7 @@
 					<input type="file" name="image" class="file-input" accept="image/*"/>
 				</fieldset>
 
-				<button type="submit" class="btn">{movie ? 'Aktualizovat' : 'Vytvořit'} Film</button>
+				<button type="submit" class="btn btn-primary">{movie ? 'Aktualizovat' : 'Vytvořit'} Film</button>
 			</div>
 		</div>
 	</div>

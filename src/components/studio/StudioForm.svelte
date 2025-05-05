@@ -32,7 +32,7 @@
 					<input type="file" name="image" class="file-input" accept="image/*"/>
 				</fieldset>
 
-				<button type="submit" class="btn">{studio ? 'Aktualizovat' : 'Vytvořit'} vydavatelství</button>
+				<button type="submit" class="btn btn-primary">{studio ? 'Aktualizovat' : 'Vytvořit'} vydavatelství</button>
 			</div>
 		</div>
 	</div>
