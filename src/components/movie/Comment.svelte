@@ -122,7 +122,7 @@
 					<p class="text-gray-300">{reply.comment}</p>
 
 					{#if user !== null}
-						{#if reply.users.id === user.id || user.user_permissions_id >= 2}
+						{#if user.user_permissions_id >= 2 || reply.users?.id === user.id}
 							<form method="POST" action="?/deleteComment" use:enhance>
 								<input type="hidden" name="commentId" value={reply.id} />
 								<button type="submit" class="btn btn-sm btn-error">

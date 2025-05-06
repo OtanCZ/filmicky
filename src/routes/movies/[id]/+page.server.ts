@@ -95,11 +95,17 @@ export const actions: Actions = {
 		const formData = await request.formData();
 		const commentId = parseInt(formData.get('commentId') as string);
 
+		const comment = await prisma.comments.findUnique({
+			where: {
+				id: commentId,
+			}
+		});
+
 		if (isNaN(commentId)) {
 			return fail(400, { message: 'Neplatná data formuláře.' });
 		}
 
-		if(!locals.user || !(locals.user.user_permissions_id! >= 2)) {
+		if((!locals.user || !(locals.user.user_permissions_id! >= 2 )) && comment?.user_id !== locals.user?.id) {
 			return fail(403, { message: 'Nemáte oprávnění smazat komentář.' });
 		}
 
